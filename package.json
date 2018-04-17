@@ -1,6 +1,6 @@
 {
   "name": "vuetify-credit-card",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Vue.js wrapper for credit card https://github.com/jessepollak/card",
   "keywords": [
     "card",
@@ -27,8 +27,7 @@
   "dependencies": {
     "bourbon": "^4.2.7",
     "payment": "^2.1.4",
-    "vue": "^2.1.0",
-    "vuetify": "^1.0.15"
+    "vue": "^2.1.0"
   },
   "devDependencies": {
     "autoprefixer": "^6.4.0",
