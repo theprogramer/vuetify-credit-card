@@ -34,7 +34,6 @@
 </template>
 
 <script>
-import Vue from 'vue'
 import Payment from 'payment/lib'
 
 let options = {
@@ -78,26 +77,6 @@ options.inputTypes.forEach(type => {
   }
 })
 
-let stateCard = {
-  toInvert: false
-}
-
-Vue.directive('card-focus', {
-  // When the bound element is inserted into the DOM...
-  inserted: function (el) {
-    const toggleFocusState = (type) => () => {
-      classDisplay[el.name]['jp-card-focused'] = type === 'focus'
-
-      stateCard.toInvert = type === 'focus' && el.name === 'cvc'
-    }
-
-    el.onfocus = toggleFocusState('focus')
-    el.onblur = toggleFocusState('blur')
-
-    if (el.name === 'cvc') Payment.formatCardCVC(el)
-  }
-})
-
 const isValid = {
   number: val => Payment.fns.validateCardNumber(val),
   name: val => val !== '',
@@ -114,7 +93,17 @@ const fns = {
 
 export default {
   name: 'Card',
-  props: ['value'],
+
+  props: {
+    value: {
+      type: Object
+    },
+    invertCard: {
+      type: Boolean,
+      default: false
+    }
+  },
+
   data () {
     return {
       isSafari: false,
@@ -122,17 +111,17 @@ export default {
       isIE11: false,
       cardType: null,
       options,
-      stateCard,
       classDisplay
     }
   },
+
   computed: {
     classCard: function () {
       let obj = {
         'jp-card-safari': this.isSafari,
         'jp-card-ie-10': this.isIE10,
         'jp-card-ie-11': this.isIE11,
-        'jp-card-flipped': this.stateCard.toInvert
+        'jp-card-flipped': this.invertCard
       }
 
       this.cardType = Payment.fns.cardType(this.value.number)
@@ -140,8 +129,11 @@ export default {
       obj['jp-card-identified'] = !!this.cardType
 
       let knownFlag = false
+
       options.cardTypes.forEach(type => {
-        if (this.cardType === type) obj['jp-card-' + type] = knownFlag = true
+        if (this.cardType === type) {
+          obj['jp-card-' + type] = knownFlag = true
+        }
       })
 
       if (!knownFlag) obj['jp-card-unknown'] = true
@@ -179,13 +171,6 @@ export default {
       if (!Payment.fns.validateCardNumber(this.value.number)) console.error('Card number isn\'t valid:', this.value.number)
     }
 
-    // [TODO]Implement in the future width.
-    // if (options.width) {
-    //   let $cardContainer = QJ(this.options.cardSelectors.cardContainer)[0]
-    //   let baseWidth = parseInt($cardContainer.clientWidth || window.getComputedStyle($cardContainer).width)
-    //   $cardContainer.style.transform = `scale(${this.options.width / baseWidth})`
-    // }
-
     // safari can't handle transparent radial gradient right now
     if (__guard__(navigator, x => x.userAgent)) {
       let ua = navigator.userAgent.toLowerCase()
@@ -201,7 +186,11 @@ export default {
       this.isIE11 = true
     }
   },
-  mounted () {
+
+  watch: {
+    invertCard (val) {
+      this.$emit('update:invert-card', val)
+    }
   }
 }
 function __guard__ (value, transform) {
@@ -211,5 +200,4 @@ function __guard__ (value, transform) {
 
 <style lang="sass">
   @import "../scss/card";
-
 </style>
