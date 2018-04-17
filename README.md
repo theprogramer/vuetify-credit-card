@@ -1,4 +1,4 @@
-# vue-credit-card
+# Vuetify Credit Card
 
 ### Vue.js credit card component
 
