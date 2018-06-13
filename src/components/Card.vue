@@ -125,28 +125,28 @@ export default {
         cardType
       } = this
       const { inputTypes: optionsInputType } = CardService.options
+      const { fns: fnsPayment } = Payment
+      const valueFormatted = CardService.clone(value)
+
+      valueFormatted.number = fnsPayment.formatCardNumber(value.number)
+      valueFormatted.expiry = CardService.formatCardExpiry(value.expiry)
 
       if (formatData) {
-        const { fns: fnsPayment } = Payment
-        value.number = fnsPayment.formatCardNumber(value.number)
-        value.expiry = CardService.formatCardExpiry(value.expiry)
+        value.number = valueFormatted.number
+        value.expiry = valueFormatted.expiry
       }
 
       optionsInputType.forEach(type => {
+        const { setClass } = CardService.classDisplay
         const valided = CardService
           .rules
-          .validate(type, value[type], cardType)
-
-        const { setClass } = CardService.classDisplay
+          .validate(type, valueFormatted[type], cardType)
 
         setClass(type, 'jp-card-valid', valided)
         setClass(type, 'jp-card-invalid', !valided)
-
-        CardService.classDisplay[type]['jp-card-valid'] = valided
-        CardService.classDisplay[type]['jp-card-invalid'] = !valided
       })
 
-      let valueObject = Object.assign({}, value)
+      let valueObject = Object.assign({}, valueFormatted)
 
       Object
         .keys(valueObject)

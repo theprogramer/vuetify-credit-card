@@ -67,7 +67,6 @@
           card(
             v-model="cardDetail"
             :invert-card.sync="invertedCard"
-            :format-data="true"
             )
 </template>
 
@@ -77,7 +76,7 @@ import Card from '@/components/Card'
 const defaultCreditCardData = {
   number: '5145607790954405',
   name: 'Name of Mastercard',
-  expiry: '12 / 2018',
+  expiry: '122018',
   cvc: '123'
 }
 
