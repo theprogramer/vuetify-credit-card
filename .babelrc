@@ -10,13 +10,7 @@
   ],
   "plugins": [
     "transform-vue-jsx",
-    "transform-runtime",
-    ["transform-imports", {
-      "vuetify": {
-        "transform": "vuetify/es5/components/${member}",
-        "preventFullImport": true
-      }
-    }]
+    "transform-runtime"
   ],
   "env": {
     "test": {

@@ -56,7 +56,6 @@
                 )
             v-flex(xs12 md6)
               v-text-field(
-                placeholder="###"
                 name="name"
                 label="CVC"
                 v-model="cardDetail.cvc"

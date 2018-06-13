@@ -1,6 +1,6 @@
 {
   "name": "vuetify-credit-card",
-  "version": "1.0.0",
+  "version": "1.0.0-beta.0",
   "description": "Vue.js wrapper for credit card https://github.com/jessepollak/card with vuetify example and pugjs and stylus.",
   "author": "Ilio Adriano de Oliveira Junior <ilioadriano@live.com>",
   "keywords": [
@@ -14,7 +14,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/iliojunior/vuetify-credit-card"
-  }
+  },
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "start": "npm run dev",
@@ -25,8 +25,7 @@
   },
   "dependencies": {
     "payment": "^2.3.0",
-    "vue": "^2.5.2",
-    "vuetify": "^1.0.19"
+    "vue": "^2.5.2"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",
@@ -36,7 +35,6 @@
     "babel-loader": "^7.1.1",
     "babel-plugin-istanbul": "^4.1.1",
     "babel-plugin-syntax-jsx": "^6.18.0",
-    "babel-plugin-transform-imports": "^1.5.0",
     "babel-plugin-transform-runtime": "^6.22.0",
     "babel-plugin-transform-vue-jsx": "^3.5.0",
     "babel-preset-env": "^1.3.2",
@@ -92,6 +90,7 @@
     "vue-loader": "^13.3.0",
     "vue-style-loader": "^3.0.1",
     "vue-template-compiler": "^2.5.2",
+    "vuetify": "^1.0.0",
     "webpack": "^3.6.0",
     "webpack-bundle-analyzer": "^2.9.0",
     "webpack-dev-server": "^2.9.1",
