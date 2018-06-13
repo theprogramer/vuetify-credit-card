@@ -14,7 +14,7 @@ The vuetify-credit-card is a Vue.js component that aims to do the same for Vue.j
 - [Puzzle-Pattern](https://github.com/guastallaigor/puzzle-pattern/)
 
 <div style="display:flex;flex-flow:row wrap;align-items:center">
-  <a href="https://github.com/guastallaigor">
+  <a href="https://github.com/iliojunior">
     <img
       align="center"
       src="/example/preview.gif"
