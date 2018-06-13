@@ -1,88 +1,44 @@
 import Payment from 'payment/lib'
+import DefaultOptionsHelper from './DefaultOptionsHelper'
 
-const options = {
-  formatting: false,
-  monthYear: 'month/year',
-  validDate: 'valid\nthru',
-  cardTypes: [
-    'amex',
-    'dankort',
-    'dinersclub',
-    'discover',
-    'jcb',
-    'laser',
-    'maestro',
-    'mastercard',
-    'unionpay',
-    'visa',
-    'visaelectron',
-    'elo'
-  ],
-  inputTypes: [
-    'number',
-    'name',
-    'expiry',
-    'cvc'
-  ],
-  placeholders: {
-    number: '•••• •••• •••• ••••',
-    cvc: '•••',
-    expiry: '••/••',
-    name: 'Full Name'
-  }
-}
+class CardService {
+  constructor () {
+    this.options = DefaultOptionsHelper.options
+    this.emptyCreditCardData = DefaultOptionsHelper.emptyCreditCardData
 
-const defaultClassDisplay = {
-  'jp-card-focused': false,
-  'jp-card-valid': false,
-  'jp-card-invalid': false
-}
+    this.rules = {
+      number: val => Payment.fns.validateCardNumber(val),
+      name: val => !!val,
+      cvc: (val, cardType) => Payment.fns.validateCardCVC(val, cardType),
+      expiry: val => {
+        const valueObject = Payment
+          .fns
+          .cardExpiryVal(val)
 
-const clone = (value) => {
-  return {...value}
-}
-
-const classDisplay = {
-  number: clone(defaultClassDisplay),
-  name: clone(defaultClassDisplay),
-  expiry: clone(defaultClassDisplay),
-  cvc: clone(defaultClassDisplay),
-
-  setClass: (type, className, value) => {
-    const classDisplayType = classDisplay[type]
-    classDisplayType[className] = value
-  }
-}
-
-options
-  .inputTypes
-  .forEach(type => {
-    classDisplay[type] = {
-      'jp-card-focused': false,
-      'jp-card-valid': false,
-      'jp-card-invalid': false
+        return Payment.fns.validateCardExpiry(valueObject.month, valueObject.year)
+      },
+      validate: (type, value, cardType) => {
+        const rule = this.rules[type]
+        return rule(value, cardType)
+      }
     }
-  })
 
-const rules = {
-  number: val => Payment.fns.validateCardNumber(val),
-  name: val => !!val,
-  cvc: (val, cardType) => Payment.fns.validateCardCVC(val, cardType),
-  expiry: val => {
-    const valueObject = Payment
-      .fns
-      .cardExpiryVal(val)
+    this.classDisplay = {
+      number: this.clone(DefaultOptionsHelper.classDisplay),
+      name: this.clone(DefaultOptionsHelper.classDisplay),
+      expiry: this.clone(DefaultOptionsHelper.classDisplay),
+      cvc: this.clone(DefaultOptionsHelper.classDisplay),
 
-    return Payment.fns.validateCardExpiry(valueObject.month, valueObject.year)
-  },
-  validate: (type, value, cardType) => {
-    const rule = rules[type]
-    return rule(value, cardType)
+      setClass: (type, className, value) => {
+        const classDisplayType = this.classDisplay[type]
+        classDisplayType[className] = value
+      }
+    }
+  }
+
+  clone (objectSource) {
+    return Object.assign({}, objectSource)
   }
 }
 
-export default {
-  options,
-  rules,
-  classDisplay
-}
+export default new CardService()

@@ -52,7 +52,8 @@ export default {
 
   props: {
     value: {
-      type: Object
+      type: Object,
+      default: () => CardService.emptyCreditCardData
     },
     invertCard: {
       type: Boolean,
