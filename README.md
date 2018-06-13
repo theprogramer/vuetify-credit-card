@@ -10,6 +10,7 @@ The vuetify-credit-card is a Vue.js component that aims to do the same for Vue.j
 - [Vue.js](https://vuejs.org/)
 - [Pug.js](https://pugjs.org/)
 - [Stylus](http://stylus-lang.com/)
+- [Payment](https://github.com/jessepollak/payment)
 - [Puzzle-Pattern](https://github.com/guastallaigor/puzzle-pattern/)
 
 <div style="display:flex;flex-flow:row wrap;align-items:center">
@@ -20,6 +21,14 @@ The vuetify-credit-card is a Vue.js component that aims to do the same for Vue.j
       alt="iliojunior">
   </a>
 </div>
+
+## Props
+
+| Name | Required | Type/Value | Default | Description |
+| --- | --- | --- | --- | --- |
+| value | No | `Object` | {} | Used for set datas in component |
+| invertCard | No | `Boolean` | false | Flag to flip card component |
+| formatValue | No | `Boolean` | false | Flag to format values on value prop |
 
 ## Contribute
 

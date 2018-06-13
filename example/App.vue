@@ -67,6 +67,7 @@
           card(
             v-model="cardDetail"
             :invert-card.sync="invertedCard"
+            format-data
             )
 </template>
 
