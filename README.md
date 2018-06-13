@@ -1,4 +1,4 @@
-# Vuetify Credit Card
+npm# Vuetify Credit Card
 
 ## Vue.js credit card component
 
@@ -28,7 +28,7 @@ The vuetify-credit-card is a Vue.js component that aims to do the same for Vue.j
 | --- | --- | --- | --- | --- |
 | value | No | `Object` | {} | Used for set datas in component |
 | invertCard | No | `Boolean` | false | Flag to flip card component |
-| formatValue | No | `Boolean` | false | Flag to format values on value prop |
+| formatData | No | `Boolean` | false | Flag to format values on value prop |
 
 ## Contribute
 
