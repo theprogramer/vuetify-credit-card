@@ -1,8 +1,6 @@
-import Card from './components/Card.vue'
+import Card from './components/Card'
 
-const VueCard = {
-  version: '0.0.3',
+module.exports = {
+  version: '1.0.0',
   Card
 }
-
-module.exports = VueCard

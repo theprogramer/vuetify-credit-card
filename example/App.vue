@@ -1,58 +1,96 @@
-<template>
-  <div id="app">
-    <a class="github-fork-ribbon" href="https://github.com/iliojunior/vuetify-credit-card" title="Fork me on GitHub">Fork me on GitHub</a>
-    <div class="header-container">
-      <div class="header-bg" :style="{'background-color': bgc}"></div>
-        <header class="header">
-          <div class="intro-wrap">
-            <div class="intro">
-              <h1>Vuetify Credit Card</h1>
-              <p>This is an Vue.js wrapper for the amazing <a href="https://github.com/jessepollak/card">Card</a> project.</p>
-            </div>
-          </div>
-
-          <div class="card-wrapper mb-5">
-            <card v-model="cardDetail" v-bind:invert-card.sync="invertedCard"></card>
-          </div>
-
-          <input name="number" placeholder="Card number" type="tel" v-model="cardDetail.number" v-card-focus>
-          <input name="name" placeholder="Full name" type="text" v-model="cardDetail.name" v-card-focus>
-          <input name="expiry" placeholder="MM/YY" type="tel" v-model="cardDetail.expiry" v-card-focus>
-          <input
-            name="cvc"
-            placeholder="CVC"
-            type="number"
-            v-model="cardDetail.cvc"
-            @focus="invertedCard = true"
-            @blur="invertedCard = false"
-            v-card-focus
-            />
-        </header>
-      </div>
-    </div>
-  </div>
+<template lang="pug">
+  v-app
+    v-container
+      v-layout(row wrap)
+        .title Vuetify Credit Card
+      v-layout(row wrap)
+        span.caption Based on project&nbsp;
+          a(
+            href="https://github.com/thiago-Malaca/vue-credit-card"
+            target="_blank"
+            ) 'vue-credit-card'.
+      v-layout(row wrap)
+        span.caption This project is refactored with Pugjs and Stylus, following the&nbsp;
+          a(
+            href="https://github.com/guastallaigor/puzzle-pattern"
+            target="_blank"
+            ) Puzzle-Pattern.
+      v-layout(row wrap)
+        span.caption Refactored by&nbsp;
+          a(
+            href="https://github.com/iliojunior"
+            target="_blank"
+            ) Ilio Adriano de Oliveira Junior (ilioadriano@live.com).
+      v-layout(row wrap)
+        a.caption(
+          href="https://github.com/iliojunior/vuetify-credit-card"
+          target="_blank"
+          ) Fork on Github.
+      v-layout(row wrap)
+        a.caption(
+          href="https://www.npmjs.com/package/vuetify-credit-card"
+          target="_blank"
+          ) NPM.
+      br
+      v-layout(row wrap)
+        v-flex(xs12 md6)
+          v-layout(row wrap)
+            v-flex.pr-2(xs12 md6)
+              v-text-field(
+                name="number"
+                label="Card number"
+                v-model="cardDetail.number"
+                )
+            v-flex(xs12 md6)
+              v-text-field(
+                name="name"
+                label="Full Name"
+                v-model="cardDetail.name"
+                )
+          v-layout(row wrap)
+            v-flex.pr-2(xs12 md6)
+              v-text-field(
+                name="expiry"
+                label="MM/YY"
+                v-model="cardDetail.expiry"
+                )
+            v-flex(xs12 md6)
+              v-text-field(
+                name="name"
+                label="CVC"
+                v-model="cardDetail.cvc"
+                @focus="invertedCard = true"
+                @blur="invertedCard = false"
+                )
+        v-spacer
+        v-flex(xs12 md3)
+          card(
+            v-model="cardDetail"
+            :invert-card.sync="invertedCard"
+            format-data
+            )
 </template>
 
 <script>
-import card from '../src/components/Card.vue'
+import Card from '@/components/Card'
 
-let defaultProps = {
-  number: '4532117080573700',
-  name: 'Comprador T Cielo',
-  expiry: '12/2018',
+const defaultCreditCardData = {
+  number: '5145607790954405',
+  name: 'Name of Mastercard',
+  expiry: '122018',
   cvc: '123'
 }
 
 export default {
-  name: 'Card',
+  name: 'card-example',
+
   components: {
-    card
+    Card
   },
-  data () {
-    return {
-      cardDetail: defaultProps,
-      invertedCard: false
-    }
-  }
+
+  data: () => ({
+    cardDetail: defaultCreditCardData,
+    invertedCard: false
+  })
 }
 </script>
