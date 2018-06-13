@@ -37,10 +37,6 @@
 import Payment from 'payment/lib'
 import CardService from './CardService'
 
-const fns = {
-  formatCardExpiry: val => val.replace(/^([0-9]{2})\/?([0-9]{2,4})$/mg, '$1 / $2')
-}
-
 const __guard__ = (value, transform) => {
   return (typeof value !== 'undefined' && value !== null)
     ? transform(value)
@@ -58,6 +54,10 @@ export default {
     invertCard: {
       type: Boolean,
       default: false
+    },
+    formatData: {
+      type: Boolean,
+      default: false
     }
   },
 
@@ -71,7 +71,11 @@ export default {
   }),
 
   created () {
-    if (CardService.options.formatting) {
+    const { formatData } = this
+
+    this.setFormattingOption(formatData)
+
+    if (formatData) {
       this.formatValues()
     }
 
@@ -85,6 +89,7 @@ export default {
         setCardType
       } = this
       const { cardTypes: cardTypesOptions } = CardService.options
+
       const classesObj = {
         'jp-card-safari': this.isSafari,
         'jp-card-ie-10': this.isIE10,
@@ -114,16 +119,23 @@ export default {
     },
 
     display () {
-      const { value } = this
+      const {
+        value,
+        formatData,
+        cardType
+      } = this
       const { inputTypes: optionsInputType } = CardService.options
 
-      value.number = Payment.fns.formatCardNumber(value.number)
-      value.expiry = fns.formatCardExpiry(value.expiry)
+      if (formatData) {
+        const { fns: fnsPayment } = Payment
+        value.number = fnsPayment.formatCardNumber(value.number)
+        value.expiry = CardService.formatCardExpiry(value.expiry)
+      }
 
       optionsInputType.forEach(type => {
         const valided = CardService
           .rules
-          .validate(type, value[type], this.cardType)
+          .validate(type, value[type], cardType)
 
         const { setClass } = CardService.classDisplay
 
@@ -152,6 +164,11 @@ export default {
   },
 
   methods: {
+    setFormattingOption (value) {
+      const { options } = this
+      options.formatting = value
+    },
+
     setCardType (number) {
       const { cardType: cardTypeFns } = Payment.fns
       this.cardType = cardTypeFns(number)
@@ -187,11 +204,13 @@ export default {
         number
       } = this.value
 
+      const expiryFormated = CardService.formatCardExpiry(expiry)
+
       if (!validateCardCVC(cvc)) {
         console.error('CVC number isn\'t valid:', cvc)
       }
 
-      if (!validateCardExpiry(expiry)) {
+      if (!validateCardExpiry(expiryFormated)) {
         console.error('Expiration date isn\'t valid:', expiry)
       }
 
@@ -222,6 +241,10 @@ export default {
   watch: {
     invertCard (val) {
       this.$emit('update:invert-card', val)
+    },
+
+    formatData (val) {
+      this.setFormattingOption(val)
     }
   }
 }

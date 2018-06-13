@@ -39,6 +39,10 @@ class CardService {
   clone (objectSource) {
     return Object.assign({}, objectSource)
   }
+
+  formatCardExpiry (value) {
+    return value.replace(/^([0-9]{2})\/?([0-9]{2,4})$/mg, '$1 / $2')
+  }
 }
 
 export default new CardService()
