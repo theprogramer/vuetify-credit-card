@@ -1,6 +1,8 @@
-npm# Vuetify Credit Card
+# Vuetify Credit Card
 
 ## Vue.js credit card component
+
+See on [NPM](https://www.npmjs.com/package/vuetify-credit-card)
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](#)
 
