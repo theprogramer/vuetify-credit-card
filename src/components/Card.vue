@@ -251,5 +251,5 @@ export default {
 </script>
 
 <style lang="stylus">
-// @import "../stylus/card"
+@import "../stylus/card"
 </style>
